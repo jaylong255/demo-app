@@ -10,7 +10,7 @@ describe('PublicComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ PublicComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

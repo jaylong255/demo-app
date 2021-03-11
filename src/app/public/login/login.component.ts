@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
       password: formData.password,
       grant_type: 'password',
       client_id: 2,
-      client_secret: 'YDpFROmO5bYeVLIFxLexOY44H0c8iDTqn4Z3hcwG',
+      client_secret: 'VQulOOeaC3AfGAwgVXzxsG5yKQkz8XCzEXDukwQV',
       scope: '*'
     };
-    this.http.post('http://demo-api.test/oauth/token', data).subscribe(
+    this.http.post('https://demo.cyberworldbuilders.com/oauth/token', data).subscribe(
       result => {
         console.log('success');
         console.log(result);
