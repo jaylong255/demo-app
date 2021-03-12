@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Router,  RouterModule, Routes } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -10,8 +13,18 @@ import {HttpClient} from "@angular/common/http";
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
+  // token;
+  // response = {
+  //   token: 'no yet token'
+  // };
+  // response.token = 'no token yet';
+  // token = 'no yet token';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
 
   }
 
@@ -30,19 +43,24 @@ export class LoginComponent implements OnInit {
       username: formData.email,
       password: formData.password,
       grant_type: 'password',
-      client_id: 2,
-      client_secret: 'VQulOOeaC3AfGAwgVXzxsG5yKQkz8XCzEXDukwQV',
+      client_id: environment.clientId,
+      client_secret: environment.clientSecret,
       scope: '*'
     };
-    this.http.post('https://demo.cyberworldbuilders.com/oauth/token', data).subscribe(
-      result => {
-        console.log('success');
-        console.log(result);
+    this.http.post(environment.appUrl + 'oauth/token', data).subscribe(
+      (result: any) => {
+        localStorage.setItem('token', result.access_token);
+        this.router.navigate(['/secure']);
       },
-      error => {
-        console.log('error');
-        console.log(error);
-      }
+      //   console.log('success');
+      //   console.log(result);
+      //   // this.response.token = result;
+      // },
+      // error => {
+      //   console.log('error');
+      //   console.log(error);
+      // }
+      // result => this.token = JSON.stringify(result)
     );
   }
 
