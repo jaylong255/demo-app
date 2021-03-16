@@ -13,7 +13,7 @@ import { Router,  RouterModule, Routes } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
-  // token;
+  token = '';
   // response = {
   //   token: 'no yet token'
   // };
@@ -50,16 +50,18 @@ export class LoginComponent implements OnInit {
     this.http.post(environment.appUrl + 'oauth/token', data).subscribe(
       (result: any) => {
         localStorage.setItem('token', result.access_token);
-        this.router.navigate(['/secure']);
+        // this.router.navigate(['/secure']);
+        this.token = JSON.stringify(result);
       },
       //   console.log('success');
       //   console.log(result);
-      //   // this.response.token = result;
+      //   // this.response.token = result
       // },
-      // error => {
-      //   console.log('error');
-      //   console.log(error);
-      // }
+      error => {
+        console.log('error');
+        console.log(error);
+        this.token = JSON.stringify(error);
+      }
       // result => this.token = JSON.stringify(result)
     );
   }
